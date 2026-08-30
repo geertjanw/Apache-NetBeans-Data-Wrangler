@@ -51,7 +51,7 @@ To run a NetBeans instance with the module for development:
 mvn nbm:cluster nbm:run-ide
 ```
 
-Tests run against an in-memory DuckDB. Tests that need the DuckDB `excel` extension are skipped when it cannot be downloaded.
+Tests run against an in-memory DuckDB. 
 
 ## How it works
 
