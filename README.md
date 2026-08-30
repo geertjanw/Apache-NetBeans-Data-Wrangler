@@ -15,9 +15,9 @@ Requires Apache NetBeans 31 or later.
 | CSV, TSV | `.csv`, `.tsv` | Editor, icon, actions. |
 | JSON, JSON Lines | `.json`, `.jsonl`, `.ndjson` | NetBeans JSON editor, actions. |
 
-Context menu on all of them: **Query with DuckDB**, **Convert with DuckDB** (CSV, TSV, Parquet, JSON Lines, JSON array, Excel, DuckDB database), **Copy File Path**.
+- Context menu on all of them: **Query with DuckDB**, **Convert with DuckDB** (CSV, TSV, Parquet, JSON Lines, JSON array, Excel, DuckDB database), **Copy File Path**.
 
-**File › New File › Analytics**: SQL Query, Data Exploration Script, Import Script, Parquet Query Script, Export Script, and sample CSV, Parquet, JSON and Excel files.
+- **File › New File › Analytics**: SQL Query, Data Exploration Script, Import Script, Parquet Query Script, Export Script, and sample CSV, Parquet, JSON and Excel files.
 
 ### SQL editor
 
