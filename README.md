@@ -76,13 +76,6 @@ src/main/resources/org/data/wrangler/
 upstream/       proposed changes to NetBeans (SqlDialect SPI, SQL execution fix)
 ```
 
-## Notes for NetBeans and DuckDB developers
-
-Two interoperability issues were found while building this and are documented in `upstream/README.md`:
-
-- NetBeans' SQL execution chooses between `execute()` and `execute(sql)` with `instanceof PreparedStatement`; DuckDB's plain statements implement that interface, so every statement failed. The plugin registers a wrapper driver that returns plain `Statement` proxies.
-- NetBeans' `ConnectionManager.connect()` silently returns `false` when the user name is empty. DuckDB connections carry a nominal user for this reason.
-
 ## License
 
 Apache License 2.0.
