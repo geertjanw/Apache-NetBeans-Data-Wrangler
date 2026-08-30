@@ -55,7 +55,11 @@ Tests run against an in-memory DuckDB. Tests that need the DuckDB `excel` extens
 
 ## How it works
 
-DataWrangler does not parse SQL itself; it asks the engine. Statements are checked with `EXPLAIN`, columns are resolved with `DESCRIBE`, functions come from `duckdb_functions()`, Parquet metadata from `parquet_metadata()`, spreadsheet cells from `read_xlsx()`. Analysis runs on a second connection to the same database so it does not interfere with queries the user runs. The consequence is that the editor reflects the installed DuckDB version and loaded extensions, and needs no update when DuckDB adds syntax; features that need a syntax tree, such as rename refactoring, are not provided.
+DataWrangler has no SQL parser and no model of the database schema. Everything the editor reports comes from running statements against the connected DuckDB database. To check a statement, DataWrangler runs it as EXPLAIN, which makes DuckDB parse the statement and resolve every name in it without executing it; DuckDB's error message and position become the underline and the tooltip. To list the columns available after s., it runs DESCRIBE on whatever s refers to, whether a table, a view, a common table expression, a subquery or a read_csv(...) call. The function list is read from duckdb_functions(), Parquet file details from parquet_metadata(), and spreadsheet cells from read_xlsx().
+
+These statements run on a separate connection to the same database, so editor checks do not interfere with queries the user is running.
+
+Two things follow from this design. What the editor shows is correct for the DuckDB version that is installed and the extensions that are loaded, and it remains correct when a new DuckDB release adds syntax, because there is nothing in DataWrangler to update. On the other hand, features that need a syntax tree of the file, such as renaming an alias throughout a script, are not offered, and most features require a connection to an open database.
 
 ## Layout
 
