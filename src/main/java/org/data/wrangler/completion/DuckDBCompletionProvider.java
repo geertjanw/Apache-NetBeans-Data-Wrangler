@@ -77,7 +77,16 @@ public final class DuckDBCompletionProvider implements CompletionProvider {
  return;
                 }
 
-                // 2. bare identifier: columns in scope (top), tables/views, then DuckDB vocabulary
+                // 2. bare identifier: code templates on top, then columns in scope, tables/views, DuckDB vocabulary
+                if (!prefix.isEmpty()) {
+                    for (org.netbeans.lib.editor.codetemplates.api.CodeTemplate ct
+                            : org.netbeans.lib.editor.codetemplates.api.CodeTemplateManager.get(doc).getCodeTemplates()) {
+                        String abbr = ct.getAbbreviation();
+                        if (abbr != null && abbr.toLowerCase(Locale.ROOT).startsWith(prefix)) {
+                            rs.addItem(new TemplateCompletionItem(ct, start, caret));
+                        }
+                    }
+                }
  if (conn != null) {
                     StatementSplitter.Statement stmt = StatementSplitter.at(text, caret);
  if (stmt != null) {

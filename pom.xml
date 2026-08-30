@@ -52,15 +52,19 @@
         <dependency><groupId>org.netbeans.api</groupId><artifactId>org-openide-loaders</artifactId><version>${netbeans.version}</version></dependency>
         <dependency><groupId>org.netbeans.api</groupId><artifactId>org-openide-text</artifactId><version>${netbeans.version}</version></dependency>
         <dependency><groupId>org.netbeans.api</groupId><artifactId>org-openide-windows</artifactId><version>${netbeans.version}</version></dependency>
-
         <dependency><groupId>org.netbeans.api</groupId><artifactId>org-netbeans-api-templates</artifactId><version>${netbeans.version}</version></dependency>
-
         <dependency><groupId>org.netbeans.api</groupId><artifactId>org-netbeans-core-multiview</artifactId><version>${netbeans.version}</version></dependency>
+        <dependency><groupId>org.netbeans.api</groupId><artifactId>org-netbeans-modules-diff</artifactId><version>${netbeans.version}</version></dependency>
 
         <!-- Editor / completion -->
         <dependency><groupId>org.netbeans.api</groupId><artifactId>org-netbeans-modules-editor-mimelookup</artifactId><version>${netbeans.version}</version></dependency>
         <dependency><groupId>org.netbeans.api</groupId><artifactId>org-netbeans-modules-editor-completion</artifactId><version>${netbeans.version}</version></dependency>
-        <dependency><groupId>org.netbeans.api</groupId><artifactId>org-netbeans-modules-editor-lib2</artifactId><version>${netbeans.version}</version></dependency>
+        <dependency><groupId>org.netbeans.api</groupId><artifactId>org-netbeans-modules-editor-codetemplates</artifactId><version>${netbeans.version}</version></dependency>
+        <dependency>
+            <groupId>org.netbeans.api</groupId>
+            <artifactId>org-netbeans-modules-editor-lib2</artifactId>
+            <version>${netbeans.version}</version>
+        </dependency>
         <dependency><groupId>org.netbeans.api</groupId><artifactId>org-netbeans-modules-editor</artifactId><version>${netbeans.version}</version></dependency>
 
         <dependency><groupId>org.netbeans.api</groupId><artifactId>org-netbeans-spi-editor-hints</artifactId><version>${netbeans.version}</version></dependency>

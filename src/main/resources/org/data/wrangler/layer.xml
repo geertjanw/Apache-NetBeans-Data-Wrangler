@@ -10,6 +10,13 @@
     <folder name="Editors">
         <folder name="text">
             <folder name="x-sql">
+                <folder name="Keybindings">
+                    <folder name="NetBeans">
+                        <folder name="Defaults">
+                            <file name="org-data-wrangler-sql-keybindings.xml" url="sql-keybindings.xml"/>
+                        </folder>
+                    </folder>
+                </folder>
                 <folder name="CodeTemplates">
                     <folder name="Defaults">
                         <file name="duckdb-codetemplates.xml" url="duckdb-codetemplates.xml"/>

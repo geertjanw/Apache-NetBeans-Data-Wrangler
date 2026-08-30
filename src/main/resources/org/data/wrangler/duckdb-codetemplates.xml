@@ -2,7 +2,7 @@
 <!DOCTYPE codetemplates PUBLIC "-//NetBeans//DTD Editor Code Templates settings 1.0//EN" "https://netbeans.org/dtds/EditorCodeTemplates-1_0.dtd">
 <!--
   DuckDB code templates for the SQL editor. Type the abbreviation and press Tab,
-  or pick them from Ctrl+Space. Editable in Tools > Options > Editor > Code Templates > SQL.
+  or pick them from Ctrl+Space, where the DataWrangler completion provider lists them at the top in two groups. Editable in Tools > Options > Editor > Code Templates > SQL.
   All abbreviations start with "d" so they do not collide with plain SQL.
 -->
 <codetemplates>
@@ -46,6 +46,61 @@ ASOF JOIN ${right} ${r}
     ${query}
 )
 SELECT * FROM ${cte}${cursor};]]></code>
+    </codetemplate>
+    <codetemplate abbreviation="dtvals" descriptionId="CREATE TABLE from inline VALUES">
+        <code><![CDATA[CREATE OR REPLACE TABLE ${table} AS
+SELECT * FROM (VALUES
+    (${v1 default="1"}, '${v2 default="a"}'),
+    (2, 'b')
+) AS t(${cols default="id, name"})${cursor};]]></code>
+    </codetemplate>
+    <codetemplate abbreviation="dvvals" descriptionId="CREATE VIEW from inline VALUES">
+        <code><![CDATA[CREATE OR REPLACE VIEW ${view} AS
+SELECT * FROM (VALUES
+    (${v1 default="1"}, '${v2 default="a"}'),
+    (2, 'b')
+) AS t(${cols default="id, name"})${cursor};]]></code>
+    </codetemplate>
+    <codetemplate abbreviation="dinsvals" descriptionId="INSERT rows with VALUES">
+        <code><![CDATA[INSERT INTO ${table} VALUES
+    (${v1 default="1"}, '${v2 default="a"}'),
+    (2, 'b')${cursor};]]></code>
+    </codetemplate>
+    <codetemplate abbreviation="dtsel" descriptionId="CREATE TABLE from a query">
+        <code><![CDATA[CREATE OR REPLACE TABLE ${table} AS
+${query}${cursor};]]></code>
+    </codetemplate>
+    <codetemplate abbreviation="dview" descriptionId="CREATE VIEW from a query">
+        <code><![CDATA[CREATE OR REPLACE VIEW ${view} AS
+${query}${cursor};]]></code>
+    </codetemplate>
+    <codetemplate abbreviation="dttemp" descriptionId="CREATE TEMP TABLE from a query">
+        <code><![CDATA[CREATE OR REPLACE TEMP TABLE ${table} AS
+${query}${cursor};]]></code>
+    </codetemplate>
+    <codetemplate abbreviation="dtcsv" descriptionId="CREATE TABLE from a CSV file">
+        <code><![CDATA[CREATE OR REPLACE TABLE ${table} AS
+SELECT * FROM read_csv('${path}', header = true, auto_detect = true)${cursor};]]></code>
+    </codetemplate>
+    <codetemplate abbreviation="dtpq" descriptionId="CREATE TABLE from Parquet file(s)">
+        <code><![CDATA[CREATE OR REPLACE TABLE ${table} AS
+SELECT * FROM read_parquet('${path}')${cursor};]]></code>
+    </codetemplate>
+    <codetemplate abbreviation="dtjson" descriptionId="CREATE TABLE from a JSON file">
+        <code><![CDATA[CREATE OR REPLACE TABLE ${table} AS
+SELECT * FROM read_json_auto('${path}')${cursor};]]></code>
+    </codetemplate>
+    <codetemplate abbreviation="dtxlsx" descriptionId="CREATE TABLE from an Excel sheet">
+        <code><![CDATA[CREATE OR REPLACE TABLE ${table} AS
+SELECT * FROM read_xlsx('${path}', sheet = '${sheet default="Sheet1"}')${cursor};]]></code>
+    </codetemplate>
+    <codetemplate abbreviation="dtable" descriptionId="CREATE TABLE with typed columns">
+        <code><![CDATA[CREATE OR REPLACE TABLE ${table} (
+    ${col1 default="id"} ${type1 default="INTEGER"},
+    ${col2 default="name"} ${type2 default="VARCHAR"},
+    ${col3 default="amount"} ${type3 default="DECIMAL(10,2)"},
+    ${col4 default="created_at"} ${type4 default="TIMESTAMP"}
+)${cursor};]]></code>
     </codetemplate>
     <codetemplate abbreviation="dcsv" descriptionId="Read a CSV file">
         <code><![CDATA[SELECT * FROM read_csv('${path}', header = true, auto_detect = true)${cursor};]]></code>

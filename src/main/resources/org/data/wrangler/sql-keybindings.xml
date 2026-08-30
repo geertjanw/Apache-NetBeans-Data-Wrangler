@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE bindings PUBLIC "-//NetBeans//DTD Editor KeyBindings settings 1.1//EN" "https://netbeans.org/dtds/EditorKeyBindings-1_1.dtd">
+<!--
+  Zoom the SQL editor text with the keyboard: Cmd+Shift+= (i.e. Cmd+Shift++) and Cmd+Shift+-
+  on macOS, Ctrl+Shift+= / Ctrl+Shift+- elsewhere. "D" is the platform menu modifier, "S" is Shift.
+  Numpad + and - are bound as well. Cmd+Shift+0 resets. The actions are NetBeans' own editor
+  zoom actions, the same ones Cmd/Ctrl + mouse wheel uses.
+-->
+<bindings>
+    <bind actionName="zoom-text-in" key="DS-EQUALS"/>
+    <bind actionName="zoom-text-in" key="DS-PLUS"/>
+    <bind actionName="zoom-text-in" key="DS-ADD"/>
+    <bind actionName="zoom-text-out" key="DS-MINUS"/>
+    <bind actionName="zoom-text-out" key="DS-SUBTRACT"/>
+    <bind actionName="zoom-text-reset" key="DS-0"/>
+</bindings>
