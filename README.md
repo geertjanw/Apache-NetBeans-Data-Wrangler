@@ -4,6 +4,21 @@ Query, convert, inspect, edit and analyze CSV, [Apache Parquet](https://parquet.
 
 Requires Apache NetBeans 31 or later.
 
+## Table of contents
+
+- [1. Features](#1-features)
+  - [1.1 New Files](#11-new-files)
+  - [1.2 Enhanced SQL Editor](#12-enhanced-sql-editor)
+  - [1.3 Enhanced Database Connections](#13-enhanced-database-connections)
+  - [1.4 New Code templates](#14-new-code-templates)
+    - [1.4.1 Table templates](#141-table-templates)
+    - [1.4.2 Snippets](#142-snippets)
+  - [1.5 Enhanced Diff View](#15-enhanced-diff-view)
+- [2. Build and install](#2-build-and-install)
+- [3. How it works](#3-how-it-works)
+- [4. Layout](#4-layout)
+- [5. License](#5-license)
+
 ## 1. Features
 
 Screenshots for the features described below are here: https://foojay.io/today/netbeans-datawrangler-query-convert-and-edit-data-analytics-files/
@@ -17,7 +32,7 @@ Screenshots for the features described below are here: https://foojay.io/today/n
 | CSV, TSV | `.csv`, `.tsv` | Editor, icon, actions. |
 | JSON, JSON Lines | `.json`, `.jsonl`, `.ndjson` | NetBeans JSON editor, actions. |
 
-- Context menu on all of them: **Query with DuckDB**, **Convert with DuckDB** (CSV, TSV, Parquet, JSON Lines, JSON array, Excel, DuckDB database), **Compare with DuckDB** (see [Compare](#compare) below), **Copy File Path**.
+- Context menu on all of them: **Query with DuckDB**, **Convert with DuckDB** (CSV, TSV, Parquet, JSON Lines, JSON array, Excel, DuckDB database), **Compare with DuckDB** (see [Enhanced Diff View](#15-enhanced-diff-view) below), **Copy File Path**.
 
 - **File › New File › Analytics**: SQL Query, Data Exploration Script, Import Script, Parquet Query Script, Export Script, and sample CSV, Parquet, JSON and Excel files.
 
@@ -31,7 +46,7 @@ Active when the editor's connection is a DuckDB connection.
 - **Documentation on hover** for keywords, types and functions.
 - **Objects created earlier** in the same script are not reported as missing.
 - **Zoom:** Cmd+Shift++ and Cmd+Shift+- (Ctrl on Windows and Linux) make the editor text larger or smaller; Cmd+Shift+0 resets.
-- **42 code templates** for common DuckDB patterns, in two groups: table templates that create or fill tables and views, and snippets. Type the abbreviation and press Tab, or pick them from the top of the completion list. The full list is in [Code templates](#code-templates) below.
+- **42 code templates** for common DuckDB patterns, in two groups: table templates that create or fill tables and views, and snippets. Type the abbreviation and press Tab, or pick them from the top of the completion list. The full list is in [Code templates](#14-new-code-templates) below.
 
 ### 1.3 Enhanced Database Connections
 
