@@ -24,7 +24,7 @@ Requires Apache NetBeans 31 or later.
 Active when the editor's connection is a DuckDB connection.
 
 - **Error checking through DuckDB itself:** each statement is sent as `EXPLAIN`, which parses and binds without executing. Syntax errors are underlined in red, unresolved names in yellow, with DuckDB's message in the tooltip.
-- **Quick fixes:** install and load a missing extension; apply DuckDB's "Did you mean" suggestion.
+- **Quick fixes:** install and load a missing extension, apply DuckDB's "Did you mean" suggestion.
 - **Completion:** functions from `duckdb_functions()` including loaded extensions, tables and views, keywords and types, and columns in scope (tables, views, CTEs, subqueries, `read_csv(...)`), resolved with `DESCRIBE`.
 - **Documentation on hover** for keywords, types and functions.
 - **Objects created earlier** in the same script are not reported as missing.
@@ -39,7 +39,7 @@ Active when the editor's connection is a DuckDB connection.
 
 ## Code templates
 
-Type the abbreviation in an SQL editor and press Tab. Blue fields are parameters; Tab moves between them, Enter finishes. All abbreviations start with `d` so they do not collide with SQL words. Edit or add templates under Tools › Options › Editor › Code Templates › Language: SQL.
+Type the abbreviation in an SQL editor and press Tab. Blue fields are parameters, Tab moves between them, Enter finishes. All abbreviations start with `d` so they do not collide with SQL words. Edit or add templates under Tools › Options › Editor › Code Templates › Language: SQL.
 
 | Abbreviation | What it does | Expansion (parameters in angle brackets) |
 |---|---|---|
