@@ -17,9 +17,21 @@ Screenshots for the features described below are here: https://foojay.io/today/n
 | CSV, TSV | `.csv`, `.tsv` | Editor, icon, actions. |
 | JSON, JSON Lines | `.json`, `.jsonl`, `.ndjson` | NetBeans JSON editor, actions. |
 
-- Context menu on all of them: **Query with DuckDB**, **Convert with DuckDB** (CSV, TSV, Parquet, JSON Lines, JSON array, Excel, DuckDB database), **Copy File Path**.
+- Context menu on all of them: **Query with DuckDB**, **Convert with DuckDB** (CSV, TSV, Parquet, JSON Lines, JSON array, Excel, DuckDB database), **Compare with DuckDB** (see [Compare](#compare) below), **Copy File Path**.
 
 - **File › New File › Analytics**: SQL Query, Data Exploration Script, Import Script, Parquet Query Script, Export Script, and sample CSV, Parquet, JSON and Excel files.
+
+### Compare
+
+**Compare with DuckDB** in the context menu of CSV, TSV, Parquet, JSON and Excel files: a data diff, not a byte diff. Select two files of the same kind and choose it, or select one and pick the other in a file chooser filtered to that kind. The menu item is greyed out when the selection cannot be compared — more than two files, or two files of different kinds — with the reason as the tooltip of the disabled item.
+
+A *Diff: a ↔ b* tab opens in the Output area with a summary line (identical or different, row counts, rows only in each side, columns in common) and, per comparison:
+
+- **Side by side** — NetBeans' own diff viewer over the two datasets as text, one row per line over the common columns, sorted so equal rows align and only differences are highlighted; first 5,000 rows of each side.
+- **Schema** — every column with its type in A and B and a status: same, type differs, only in A, only in B; differences in red.
+- **Only in A** and **Only in B** — the exact row sets, computed with `EXCEPT ALL` in both directions so duplicates count; shown up to 2,000 rows with the total. Nested values render as JSON.
+
+All tables sort by clicking a column header. Columns present in both files but with different types are compared as numbers when both types are numeric (so a `DECIMAL(10,2)` matches a `DOUBLE`), otherwise as text. Excel workbooks are compared sheet by sheet over the sheets they have in common, one set of tabs per sheet, and sheets that exist in only one workbook are listed. The comparison runs on the automatically opened DuckDB connection.
 
 ### SQL editor
 
@@ -30,7 +42,8 @@ Active when the editor's connection is a DuckDB connection.
 - **Completion:** functions from `duckdb_functions()` including loaded extensions, tables and views, keywords and types, and columns in scope (tables, views, CTEs, subqueries, `read_csv(...)`), resolved with `DESCRIBE`.
 - **Documentation on hover** for keywords, types and functions.
 - **Objects created earlier** in the same script are not reported as missing.
-- **31 code templates** for common DuckDB patterns: type the abbreviation, press Tab. The full list is in [Code templates](#code-templates) below.
+- **Zoom:** Cmd+Shift++ and Cmd+Shift+- (Ctrl on Windows and Linux) make the editor text larger or smaller; Cmd+Shift+0 resets.
+- **42 code templates** for common DuckDB patterns, in two groups: table templates that create or fill tables and views, and snippets. Type the abbreviation and press Tab, or pick them from the top of the completion list. The full list is in [Code templates](#code-templates) below.
 
 ### Connections
 
@@ -41,7 +54,29 @@ Active when the editor's connection is a DuckDB connection.
 
 ## Code templates
 
-Type the abbreviation in an SQL editor and press Tab. Blue fields are parameters, Tab moves between them, Enter finishes. All abbreviations start with `d` so they do not collide with SQL words. Edit or add templates under Tools › Options › Editor › Code Templates › Language: SQL.
+Type the abbreviation in an SQL editor and press Tab, or type `d` and press Ctrl+Space: the templates are listed at the top of the completion list, table templates first, then snippets. Blue fields are parameters; Tab moves between them, Enter finishes. All abbreviations start with `d` so they do not collide with SQL words. Edit or add templates under Tools › Options › Editor › Code Templates › Language: SQL.
+
+### Table templates
+
+Create or fill tables and views: from inline `VALUES`, from a query, from a CSV, Parquet, JSON or Excel file, or empty with typed columns. Labelled "Table template" in the completion list.
+
+| Abbreviation | What it does | Expansion (parameters in angle brackets) |
+|---|---|---|
+| `dtvals` | Create a table from inline `VALUES`; the alias list names the columns. | `CREATE OR REPLACE TABLE <table> AS SELECT * FROM (VALUES (1, 'a'), (2, 'b') ) AS t(id, name);` |
+| `dvvals` | Create a view from inline `VALUES`; change the rows later without touching queries that use the view. | `CREATE OR REPLACE VIEW <view> AS SELECT * FROM (VALUES (1, 'a'), (2, 'b') ) AS t(id, name);` |
+| `dinsvals` | Append rows to an existing table. | `INSERT INTO <table> VALUES (1, 'a'), (2, 'b');` |
+| `dtsel` | Materialise a query as a table. | `CREATE OR REPLACE TABLE <table> AS <query>;` |
+| `dview` | Save a query as a view. | `CREATE OR REPLACE VIEW <view> AS <query>;` |
+| `dttemp` | Materialise a query as a temporary table (dropped when the connection closes). | `CREATE OR REPLACE TEMP TABLE <table> AS <query>;` |
+| `dtcsv` | Load a CSV file into a table. | `CREATE OR REPLACE TABLE <table> AS SELECT * FROM read_csv('<path>', header = true, auto_detect = true);` |
+| `dtpq` | Load a Parquet file or glob into a table. | `CREATE OR REPLACE TABLE <table> AS SELECT * FROM read_parquet('<path>');` |
+| `dtjson` | Load a JSON or JSON Lines file into a table. | `CREATE OR REPLACE TABLE <table> AS SELECT * FROM read_json_auto('<path>');` |
+| `dtxlsx` | Load one sheet of an Excel workbook into a table. | `CREATE OR REPLACE TABLE <table> AS SELECT * FROM read_xlsx('<path>', sheet = 'Sheet1');` |
+| `dtable` | Create an empty table with typed columns. | `CREATE OR REPLACE TABLE <table> ( id INTEGER, name VARCHAR, amount DECIMAL(10,2), created_at TIMESTAMP );` |
+
+### Snippets
+
+Query patterns, file reads and exports, and introspection. Labelled "Snippet" in the completion list.
 
 | Abbreviation | What it does | Expansion (parameters in angle brackets) |
 |---|---|---|
@@ -115,13 +150,14 @@ src/main/java/org/data/wrangler/
   connection/   Register DuckDB Database dialog
   convert/      Convert with DuckDB
   dataview/     result viewer with JSON rendering of nested values
+  diff/         Compare with DuckDB: data diff service, selection rules, diff window
   driver/       driver registration and the JDBC wrapper driver
   excel/        Excel reading, writing, spreadsheet view
   extensions/   Manage DuckDB Extensions
   files/        file types, templates, Query with DuckDB, shared data-file window
   parquet/      Parquet inspector and views
 src/main/resources/org/data/wrangler/
-  syntax-docs.properties, duckdb-codetemplates.xml, icons, templates
+  syntax-docs.properties, duckdb-codetemplates.xml, sql-keybindings.xml, icons, templates
 upstream/       proposed changes to NetBeans (SqlDialect SPI, SQL execution fix)
 ```
 
