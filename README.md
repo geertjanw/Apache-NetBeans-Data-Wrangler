@@ -4,11 +4,11 @@ Query, convert, inspect, edit and analyze CSV, [Apache Parquet](https://parquet.
 
 Requires Apache NetBeans 31 or later.
 
-## Features
+## 1. Features
 
 Screenshots for the features described below are here: https://foojay.io/today/netbeans-datawrangler-query-convert-and-edit-data-analytics-files/
 
-### Files
+### 1.1 New Files
 
 | Format | Extensions | What you get |
 |---|---|---|
@@ -21,7 +21,7 @@ Screenshots for the features described below are here: https://foojay.io/today/n
 
 - **File › New File › Analytics**: SQL Query, Data Exploration Script, Import Script, Parquet Query Script, Export Script, and sample CSV, Parquet, JSON and Excel files.
 
-### SQL editor
+### 1.2 Enhanced SQL Editor
 
 Active when the editor's connection is a DuckDB connection.
 
@@ -33,18 +33,18 @@ Active when the editor's connection is a DuckDB connection.
 - **Zoom:** Cmd+Shift++ and Cmd+Shift+- (Ctrl on Windows and Linux) make the editor text larger or smaller; Cmd+Shift+0 resets.
 - **42 code templates** for common DuckDB patterns, in two groups: table templates that create or fill tables and views, and snippets. Type the abbreviation and press Tab, or pick them from the top of the completion list. The full list is in [Code templates](#code-templates) below.
 
-### Connections
+### 1.3 Enhanced Connections
 
 - **Register DuckDB Database** on the Databases node: in-memory or file, read-only, threads, memory limit. No credentials.
 - **Manage DuckDB Extensions** on a connection.
 - **Run in DuckDB Result Viewer** in the editor: nested values as formatted JSON.
 - Connections are opened automatically when a feature needs them.
 
-### Code templates
+### 1.4 New Code templates
 
 Type the abbreviation in an SQL editor and press Tab, or type `d` and press Ctrl+Space: the templates are listed at the top of the completion list, table templates first, then snippets. Blue fields are parameters; Tab moves between them, Enter finishes. All abbreviations start with `d` so they do not collide with SQL words. Edit or add templates under Tools › Options › Editor › Code Templates › Language: SQL.
 
-#### Table templates
+#### 1.4.1 Table templates
 
 Create or fill tables and views: from inline `VALUES`, from a query, from a CSV, Parquet, JSON or Excel file, or empty with typed columns. Labelled "Table template" in the completion list.
 
@@ -62,7 +62,7 @@ Create or fill tables and views: from inline `VALUES`, from a query, from a CSV,
 | `dtxlsx` | Load one sheet of an Excel workbook into a table. | `CREATE OR REPLACE TABLE <table> AS SELECT * FROM read_xlsx('<path>', sheet = 'Sheet1');` |
 | `dtable` | Create an empty table with typed columns. | `CREATE OR REPLACE TABLE <table> ( id INTEGER, name VARCHAR, amount DECIMAL(10,2), created_at TIMESTAMP );` |
 
-#### Snippets
+#### 1.4.2 Snippets
 
 Query patterns, file reads and exports, and introspection. Labelled "Snippet" in the completion list.
 
@@ -100,7 +100,7 @@ Query patterns, file reads and exports, and introspection. Labelled "Snippet" in
 | `ddate` | Aggregate by calendar bucket with `date_trunc`. | `SELECT date_trunc('month', <ts>) AS bucket, count(*) FROM <table> GROUP BY ALL ORDER BY ALL;` |
 | `dwin` | Running total with a window frame. | `SELECT <cols>, sum(<value>) OVER (PARTITION BY <key> ORDER BY <order> ROWS UNBOUNDED PRECEDING) AS running_total FROM <table>;` |
 
-### Diff View
+### 1.5 Diff View
 
 **Compare with DuckDB** in the context menu of CSV, TSV, Parquet, JSON and Excel files: a data diff, not a byte diff. Select two files of the same kind and choose it, or select one and pick the other in a file chooser filtered to that kind. The menu item is greyed out when the selection cannot be compared — more than two files, or two files of different kinds — with the reason as the tooltip of the disabled item.
 
@@ -112,7 +112,7 @@ A *Diff: a ↔ b* tab opens in the Output area with a summary line (identical or
 
 All tables sort by clicking a column header. Columns present in both files but with different types are compared as numbers when both types are numeric (so a `DECIMAL(10,2)` matches a `DOUBLE`), otherwise as text. Excel workbooks are compared sheet by sheet over the sheets they have in common, one set of tabs per sheet, and sheets that exist in only one workbook are listed. The comparison runs on the automatically opened DuckDB connection.
 
-## Build and install
+## 2. Build and install
 
 ```
 mvn install
@@ -128,7 +128,7 @@ mvn nbm:cluster nbm:run-ide
 
 Tests run against an in-memory DuckDB. 
 
-## How it works
+## 3. How it works
 
 DataWrangler has no SQL parser and no model of the database schema. Everything the editor reports comes from running statements against the connected DuckDB database. 
 
@@ -141,7 +141,7 @@ These statements run on a separate connection to the same database, so editor ch
 - What the editor shows is correct for the DuckDB version that is installed and the extensions that are loaded, and it remains correct when a new DuckDB release adds syntax, because there is nothing in DataWrangler to update.
 - On the other hand, features that need a syntax tree of the file, such as renaming an alias throughout a script, are not supported, and most features require a connection to an open database, which is automatically created when needed.
 
-## Layout
+## 4. Layout
 
 ```
 src/main/java/org/data/wrangler/
@@ -161,6 +161,6 @@ src/main/resources/org/data/wrangler/
 upstream/       proposed changes to NetBeans (SqlDialect SPI, SQL execution fix)
 ```
 
-## License
+## 5. License
 
 Apache License 2.0.
