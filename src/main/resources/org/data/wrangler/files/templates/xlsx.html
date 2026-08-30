@@ -1,0 +1,5 @@
+<html><body>A real .xlsx workbook with two sheets: <b>orders</b> (8 rows) and <b>products</b> (6 rows). Opens in a spreadsheet-style Visual tab; the Query tab reads it with DuckDB's <code>read_xlsx</code> (excel extension installed on first use) and comes with commented tips.<br><br>
+Try in the Query tab:<br>
+<code>SELECT city, sum(quantity*unit_price) FROM read_xlsx('sample.xlsx') GROUP BY ALL;</code><br>
+<code>SELECT o.product, p.category, o.quantity FROM read_xlsx('sample.xlsx', sheet='orders') o JOIN read_xlsx('sample.xlsx', sheet='products') p USING (product);</code><br>
+<code>PIVOT read_xlsx('sample.xlsx') ON city USING sum(quantity*unit_price) GROUP BY product;</code></body></html>

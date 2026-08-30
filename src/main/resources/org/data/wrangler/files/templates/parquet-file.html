@@ -1,0 +1,6 @@
+<html><body>A real <a href="https://parquet.apache.org/">Apache Parquet</a> file (zstd, 200 rows) with an <code>orders</code> dataset: order_id, customer, city, product, quantity, unit_price, ordered_at, a <code>VARCHAR[]</code> tags column and a <code>STRUCT</code> meta column. Opens in a Visual tab (schema, storage, preview) with a Query tab.<br><br>
+Try in the Query tab:<br>
+<code>SELECT city, count(*), sum(quantity*unit_price) AS revenue FROM read_parquet('sample.parquet') GROUP BY ALL ORDER BY revenue DESC;</code><br>
+<code>SELECT product, list_contains(tags,'display') AS has_display, meta.src FROM read_parquet('sample.parquet') LIMIT 10;</code><br>
+<code>SELECT date_trunc('week', ordered_at) AS wk, sum(quantity*unit_price) FROM read_parquet('sample.parquet') GROUP BY ALL ORDER BY wk;</code><br>
+<code>SELECT path_in_schema, total_compressed_size FROM parquet_metadata('sample.parquet');</code></body></html>

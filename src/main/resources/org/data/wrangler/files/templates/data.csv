@@ -1,0 +1,4 @@
+id,name,city,amount,created_at
+1,Alice,Utrecht,10.50,2026-01-01
+2,Bob,Delft,20.00,2026-01-02
+3,Carol,Utrecht,5.25,2026-01-03

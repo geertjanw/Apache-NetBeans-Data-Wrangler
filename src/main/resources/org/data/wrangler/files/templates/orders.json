@@ -1,0 +1,10 @@
+[
+  {"order_id": 1001, "customer": {"name": "Alice", "city": "Utrecht"},   "items": [{"product": "Keyboard", "qty": 1, "price": 49.99}],                                            "ordered_at": "2026-01-03T09:15:00", "tags": ["hardware"]},
+  {"order_id": 1002, "customer": {"name": "Bob",   "city": "Delft"},     "items": [{"product": "Monitor",  "qty": 2, "price": 189.00}],                                           "ordered_at": "2026-01-03T11:40:00", "tags": ["hardware", "display"]},
+  {"order_id": 1003, "customer": {"name": "Alice", "city": "Utrecht"},   "items": [{"product": "USB-C hub", "qty": 1, "price": 29.50}, {"product": "Mouse", "qty": 1, "price": 19.95}], "ordered_at": "2026-01-05T14:02:00", "tags": ["hardware"]},
+  {"order_id": 1004, "customer": {"name": "Carol", "city": "Amsterdam"}, "items": [{"product": "Laptop",   "qty": 1, "price": 999.00}],                                           "ordered_at": "2026-01-07T16:30:00", "tags": ["hardware", "laptop"]},
+  {"order_id": 1005, "customer": {"name": "Dave",  "city": "Delft"},     "items": [{"product": "Mouse",    "qty": 3, "price": 19.95}],                                            "ordered_at": "2026-01-08T10:05:00", "tags": ["hardware"]},
+  {"order_id": 1006, "customer": {"name": "Carol", "city": "Amsterdam"}, "items": [{"product": "Monitor",  "qty": 1, "price": 189.00}, {"product": "Webcam", "qty": 1, "price": 59.00}], "ordered_at": "2026-01-10T13:20:00", "tags": ["hardware", "display", "video"]},
+  {"order_id": 1007, "customer": {"name": "Erin",  "city": "Utrecht"},   "items": [{"product": "Webcam",   "qty": 1, "price": 59.00}],                                            "ordered_at": "2026-01-12T08:55:00", "tags": ["hardware", "video"]},
+  {"order_id": 1008, "customer": {"name": "Bob",   "city": "Delft"},     "items": [{"product": "Keyboard", "qty": 2, "price": 49.99}],                                            "ordered_at": "2026-01-15T17:45:00", "tags": ["hardware"]}
+]

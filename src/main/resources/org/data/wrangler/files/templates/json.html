@@ -1,0 +1,6 @@
+<html><body>A JSON array of 8 orders with nested objects (<code>customer</code>), arrays of objects (<code>items</code>) and string arrays (<code>tags</code>). DuckDB's <code>read_json_auto</code> maps them to STRUCT and LIST columns.<br><br>
+Try with Query with DuckDB:<br>
+<code>SELECT customer.city, count(*) FROM read_json_auto('orders.json') GROUP BY ALL;</code><br>
+<code>SELECT order_id, unnest(items, recursive := true) FROM read_json_auto('orders.json');</code><br>
+<code>SELECT order_id, list_sum(list_transform(items, i -> i.qty * i.price)) AS total FROM read_json_auto('orders.json') ORDER BY total DESC;</code><br>
+<code>SELECT unnest(tags) AS tag, count(*) FROM read_json_auto('orders.json') GROUP BY ALL;</code></body></html>

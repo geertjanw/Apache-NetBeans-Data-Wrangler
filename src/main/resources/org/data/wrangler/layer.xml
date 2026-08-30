@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE filesystem PUBLIC "-//NetBeans//DTD Filesystem 1.2//EN" "https://netbeans.org/dtds/filesystem-1_2.dtd">
+<filesystem>
+    <folder name="Templates">
+        <folder name="Analytics">
+            <attr name="displayName" bundlevalue="org.data.wrangler.Bundle#Templates/Analytics"/>
+            <attr name="position" intvalue="750"/>
+        </folder>
+    </folder>
+    <folder name="Editors">
+        <folder name="text">
+            <folder name="x-sql">
+                <folder name="CodeTemplates">
+                    <folder name="Defaults">
+                        <file name="duckdb-codetemplates.xml" url="duckdb-codetemplates.xml"/>
+                    </folder>
+                </folder>
+            </folder>
+        </folder>
+    </folder>
+</filesystem>

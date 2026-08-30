@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+OpenIDE-Module: org.data.wrangler
+OpenIDE-Module-Layer: org/data/wrangler/layer.xml
+OpenIDE-Module-Localizing-Bundle: org/data/wrangler/Bundle.properties
+OpenIDE-Module-Specification-Version: 1.0
+OpenIDE-Module-Requires: org.openide.modules.ModuleFormat1

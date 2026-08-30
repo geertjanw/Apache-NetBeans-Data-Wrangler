@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.data.wrangler</groupId>
+    <artifactId>datawrangler</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>nbm</packaging>
+    <name>NetBeans DataWrangler</name>
+    <url>https://github.com/geertjanw/Apache-NetBeans-Data-Wrangler</url>
+    <description>
+        Query, convert, inspect, edit and analyze CSV, Apache Parquet, JSON and Excel files in Apache NetBeans.
+        Files open as documents with Visual and Query tabs; the SQL editor gains completion, documentation,
+        error checking and quick fixes for analytical SQL. DuckDB is bundled.
+    </description>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0</url>
+        </license>
+    </licenses>
+
+    <scm>
+        <url>https://github.com/geertjanw/Apache-NetBeans-Data-Wrangler</url>
+        <connection>scm:git:https://github.com/geertjanw/Apache-NetBeans-Data-Wrangler.git</connection>
+    </scm>
+
+    <properties>
+        <!-- Verify against https://search.maven.org before building. -->
+        <netbeans.version>RELEASE250</netbeans.version>
+        <duckdb.version>1.5.5.0</duckdb.version>
+        <maven.compiler.release>17</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <!-- All NetBeans artifacts (org.netbeans.api and org.netbeans.modules) are on Maven Central; no extra repository needed. -->
+
+    <dependencies>
+        <!-- OpenIDE / platform -->
+        <dependency><groupId>org.netbeans.api</groupId><artifactId>org-openide-util</artifactId><version>${netbeans.version}</version></dependency>
+        <dependency><groupId>org.netbeans.api</groupId><artifactId>org-openide-util-ui</artifactId><version>${netbeans.version}</version></dependency>
+        <dependency><groupId>org.netbeans.api</groupId><artifactId>org-openide-util-lookup</artifactId><version>${netbeans.version}</version></dependency>
+        <dependency><groupId>org.netbeans.api</groupId><artifactId>org-openide-modules</artifactId><version>${netbeans.version}</version></dependency>
+        <dependency><groupId>org.netbeans.api</groupId><artifactId>org-openide-nodes</artifactId><version>${netbeans.version}</version></dependency>
+        <dependency><groupId>org.netbeans.api</groupId><artifactId>org-openide-awt</artifactId><version>${netbeans.version}</version></dependency>
+        <dependency><groupId>org.netbeans.api</groupId><artifactId>org-openide-dialogs</artifactId><version>${netbeans.version}</version></dependency>
+        <dependency><groupId>org.netbeans.api</groupId><artifactId>org-openide-filesystems</artifactId><version>${netbeans.version}</version></dependency>
+        <dependency><groupId>org.netbeans.api</groupId><artifactId>org-openide-filesystems-nb</artifactId><version>${netbeans.version}</version></dependency>
+        <dependency><groupId>org.netbeans.api</groupId><artifactId>org-openide-loaders</artifactId><version>${netbeans.version}</version></dependency>
+        <dependency><groupId>org.netbeans.api</groupId><artifactId>org-openide-text</artifactId><version>${netbeans.version}</version></dependency>
+        <dependency><groupId>org.netbeans.api</groupId><artifactId>org-openide-windows</artifactId><version>${netbeans.version}</version></dependency>
+
+        <dependency><groupId>org.netbeans.api</groupId><artifactId>org-netbeans-api-templates</artifactId><version>${netbeans.version}</version></dependency>
+
+        <dependency><groupId>org.netbeans.api</groupId><artifactId>org-netbeans-core-multiview</artifactId><version>${netbeans.version}</version></dependency>
+
+        <!-- Editor / completion -->
+        <dependency><groupId>org.netbeans.api</groupId><artifactId>org-netbeans-modules-editor-mimelookup</artifactId><version>${netbeans.version}</version></dependency>
+        <dependency><groupId>org.netbeans.api</groupId><artifactId>org-netbeans-modules-editor-completion</artifactId><version>${netbeans.version}</version></dependency>
+        <dependency><groupId>org.netbeans.api</groupId><artifactId>org-netbeans-modules-editor-lib2</artifactId><version>${netbeans.version}</version></dependency>
+        <dependency><groupId>org.netbeans.api</groupId><artifactId>org-netbeans-modules-editor</artifactId><version>${netbeans.version}</version></dependency>
+
+        <dependency><groupId>org.netbeans.api</groupId><artifactId>org-netbeans-spi-editor-hints</artifactId><version>${netbeans.version}</version></dependency>
+        <dependency><groupId>org.netbeans.api</groupId><artifactId>org-netbeans-modules-editor-settings</artifactId><version>${netbeans.version}</version></dependency>
+        <dependency><groupId>org.netbeans.api</groupId><artifactId>org-netbeans-modules-editor-lib</artifactId><version>${netbeans.version}</version></dependency>
+        <dependency><groupId>org.netbeans.api</groupId><artifactId>org-netbeans-modules-editor-document</artifactId><version>${netbeans.version}</version></dependency>
+
+        <!-- Database Explorer public API -->
+        <dependency><groupId>org.netbeans.api</groupId><artifactId>org-netbeans-modules-db</artifactId><version>${netbeans.version}</version></dependency>
+
+        <!-- DuckDB JDBC driver, bundled into modules/ext/ by nbm-maven-plugin -->
+        <dependency><groupId>org.duckdb</groupId><artifactId>duckdb_jdbc</artifactId><version>${duckdb.version}</version></dependency>
+
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.11.4</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.netbeans.utilities</groupId>
+                <artifactId>nbm-maven-plugin</artifactId>
+                <version>14.3</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <codeNameBase>org.data.wrangler</codeNameBase>
+                    <author>NetBeans DuckDB contributors</author>
+                    <licenseName>Apache 2.0</licenseName>
+                    <licenseFile>LICENSE</licenseFile>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.14.0</version>
+                <configuration>
+                    <!-- JDK 23+ disables classpath annotation processing by default; NetBeans
+                         needs it to generate layer entries from @ActionRegistration etc. -->
+                    <proc>full</proc>
+                    <showWarnings>true</showWarnings>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.4.2</version>
+                <configuration>
+                    <archive><manifestFile>${project.build.outputDirectory}/META-INF/MANIFEST.MF</manifestFile></archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.5.2</version>
+            </plugin>
+        </plugins>
+    </build>
+</project>

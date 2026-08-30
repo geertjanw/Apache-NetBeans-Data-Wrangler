@@ -1,0 +1,6 @@
+<html><body>Creates a small CSV file with a header row (id, name, city, amount, created_at). Right-click it for <b>Query with DuckDB</b> or <b>Convert with DuckDB</b>.<br><br>
+Try:<br>
+<code>SELECT * FROM sniff_csv('data.csv');</code> &mdash; what DuckDB detected<br>
+<code>SELECT city, sum(amount) FROM read_csv('data.csv') GROUP BY ALL;</code><br>
+<code>SELECT *, amount * 1.21 AS with_vat FROM 'data.csv' WHERE created_at >= DATE '2026-01-02';</code><br>
+<code>CREATE OR REPLACE TABLE data AS SELECT * FROM 'data.csv';</code></body></html>

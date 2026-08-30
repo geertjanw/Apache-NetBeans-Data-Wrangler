@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE codetemplates PUBLIC "-//NetBeans//DTD Editor Code Templates settings 1.0//EN" "https://netbeans.org/dtds/EditorCodeTemplates-1_0.dtd">
+<!--
+  DuckDB code templates for the SQL editor. Type the abbreviation and press Tab,
+  or pick them from Ctrl+Space. Editable in Tools > Options > Editor > Code Templates > SQL.
+  All abbreviations start with "d" so they do not collide with plain SQL.
+-->
+<codetemplates>
+    <codetemplate abbreviation="dfrom" descriptionId="FROM-first query">
+        <code><![CDATA[FROM ${table} SELECT ${cols default="*"} ${cursor};]]></code>
+    </codetemplate>
+    <codetemplate abbreviation="dexcl" descriptionId="SELECT * EXCLUDE (...)">
+        <code><![CDATA[SELECT * EXCLUDE (${cols}) FROM ${table}${cursor};]]></code>
+    </codetemplate>
+    <codetemplate abbreviation="drepl" descriptionId="SELECT * REPLACE (expr AS col)">
+        <code><![CDATA[SELECT * REPLACE (${expr} AS ${col}) FROM ${table}${cursor};]]></code>
+    </codetemplate>
+    <codetemplate abbreviation="dcols" descriptionId="COLUMNS() regex projection">
+        <code><![CDATA[SELECT ${agg default="min"}(COLUMNS('${regex default=".*"}')) FROM ${table}${cursor};]]></code>
+    </codetemplate>
+    <codetemplate abbreviation="dqual" descriptionId="Top-N per group with QUALIFY">
+        <code><![CDATA[SELECT *
+FROM ${table}
+QUALIFY row_number() OVER (PARTITION BY ${key} ORDER BY ${order} DESC) <= ${n default="1"}${cursor};]]></code>
+    </codetemplate>
+    <codetemplate abbreviation="dgall" descriptionId="GROUP BY ALL aggregate">
+        <code><![CDATA[SELECT ${dims}, ${agg default="count(*)"}
+FROM ${table}
+GROUP BY ALL
+ORDER BY ALL${cursor};]]></code>
+    </codetemplate>
+    <codetemplate abbreviation="dpiv" descriptionId="PIVOT">
+        <code><![CDATA[PIVOT ${table} ON ${column} USING ${agg default="sum"}(${value}) GROUP BY ${group}${cursor};]]></code>
+    </codetemplate>
+    <codetemplate abbreviation="dunpiv" descriptionId="UNPIVOT">
+        <code><![CDATA[UNPIVOT ${table} ON ${columns} INTO NAME ${name default="name"} VALUE ${value default="value"}${cursor};]]></code>
+    </codetemplate>
+    <codetemplate abbreviation="dasof" descriptionId="ASOF JOIN (time-series lookup)">
+        <code><![CDATA[SELECT ${l default="l"}.*, ${r default="r"}.${rcol}
+FROM ${left} ${l}
+ASOF JOIN ${right} ${r}
+  ON ${l}.${key} = ${r}.${key} AND ${l}.${ts default="ts"} >= ${r}.${ts}${cursor};]]></code>
+    </codetemplate>
+    <codetemplate abbreviation="dcte" descriptionId="WITH ... AS (...) SELECT">
+        <code><![CDATA[WITH ${cte default="cte"} AS (
+    ${query}
+)
+SELECT * FROM ${cte}${cursor};]]></code>
+    </codetemplate>
+    <codetemplate abbreviation="dcsv" descriptionId="Read a CSV file">
+        <code><![CDATA[SELECT * FROM read_csv('${path}', header = true, auto_detect = true)${cursor};]]></code>
+    </codetemplate>
+    <codetemplate abbreviation="dpq" descriptionId="Read Parquet file(s) (glob allowed)">
+        <code><![CDATA[SELECT * FROM read_parquet('${path}')${cursor};]]></code>
+    </codetemplate>
+    <codetemplate abbreviation="djson" descriptionId="Read JSON / NDJSON">
+        <code><![CDATA[SELECT * FROM read_json_auto('${path}')${cursor};]]></code>
+    </codetemplate>
+    <codetemplate abbreviation="dcopy" descriptionId="COPY query to Parquet">
+        <code><![CDATA[COPY (${query}) TO '${path}' (FORMAT parquet)${cursor};]]></code>
+    </codetemplate>
+    <codetemplate abbreviation="dctas" descriptionId="CREATE TABLE AS from a file">
+        <code><![CDATA[CREATE OR REPLACE TABLE ${table} AS SELECT * FROM '${path}'${cursor};]]></code>
+    </codetemplate>
+    <codetemplate abbreviation="dins" descriptionId="INSERT BY NAME with upsert">
+        <code><![CDATA[INSERT INTO ${table} BY NAME
+SELECT ${cols} FROM ${source}
+ON CONFLICT DO UPDATE SET ${col} = excluded.${col}${cursor};]]></code>
+    </codetemplate>
+    <codetemplate abbreviation="dmacro" descriptionId="CREATE MACRO (scalar)">
+        <code><![CDATA[CREATE OR REPLACE MACRO ${name}(${params}) AS ${expr}${cursor};]]></code>
+    </codetemplate>
+    <codetemplate abbreviation="dtmacro" descriptionId="CREATE MACRO ... AS TABLE">
+        <code><![CDATA[CREATE OR REPLACE MACRO ${name}(${params}) AS TABLE
+    ${query}${cursor};]]></code>
+    </codetemplate>
+    <codetemplate abbreviation="dlist" descriptionId="List lambda transform/filter">
+        <code><![CDATA[SELECT list_transform(list_filter(${list}, x -> ${pred default="x IS NOT NULL"}), x -> ${expr default="x"})${cursor};]]></code>
+    </codetemplate>
+    <codetemplate abbreviation="dstruct" descriptionId="STRUCT literal and field access">
+        <code><![CDATA[SELECT {'${a default="a"}': ${va default="1"}, '${b default="b"}': ${vb default="'x'"}} AS s, s.${a}${cursor};]]></code>
+    </codetemplate>
+    <codetemplate abbreviation="dunnest" descriptionId="UNNEST a list column">
+        <code><![CDATA[SELECT ${id}, unnest(${list}) AS ${elem default="elem"} FROM ${table}${cursor};]]></code>
+    </codetemplate>
+    <codetemplate abbreviation="dvals" descriptionId="Inline rows with VALUES (no file needed)">
+        <code><![CDATA[SELECT * FROM (VALUES
+    (${v1 default="1"}, '${v2 default="a"}'),
+    (2, 'b')
+) AS ${alias default="t"}(${cols default="id, name"})${cursor};]]></code>
+    </codetemplate>
+    <codetemplate abbreviation="dsample" descriptionId="Random sample">
+        <code><![CDATA[SELECT * FROM ${table} USING SAMPLE ${pct default="10"}% (bernoulli, ${seed default="42"})${cursor};]]></code>
+    </codetemplate>
+    <codetemplate abbreviation="dsum" descriptionId="SUMMARIZE statistics">
+        <code><![CDATA[SUMMARIZE ${table}${cursor};]]></code>
+    </codetemplate>
+    <codetemplate abbreviation="ddesc" descriptionId="DESCRIBE a query">
+        <code><![CDATA[DESCRIBE SELECT * FROM ${source}${cursor};]]></code>
+    </codetemplate>
+    <codetemplate abbreviation="dexpl" descriptionId="EXPLAIN ANALYZE">
+        <code><![CDATA[EXPLAIN ANALYZE ${query}${cursor};]]></code>
+    </codetemplate>
+    <codetemplate abbreviation="dext" descriptionId="INSTALL and LOAD an extension">
+        <code><![CDATA[INSTALL ${ext}; LOAD ${ext};${cursor}]]></code>
+    </codetemplate>
+    <codetemplate abbreviation="dattach" descriptionId="ATTACH another database">
+        <code><![CDATA[ATTACH '${path}' AS ${name} (READ_ONLY);
+SELECT * FROM ${name}.main.${table}${cursor};]]></code>
+    </codetemplate>
+    <codetemplate abbreviation="dsecret" descriptionId="CREATE SECRET for S3">
+        <code><![CDATA[CREATE OR REPLACE SECRET ${name default="s3"} (TYPE s3, KEY_ID '${key}', SECRET '${secret}', REGION '${region default="eu-west-1"}')${cursor};]]></code>
+    </codetemplate>
+    <codetemplate abbreviation="ddate" descriptionId="Date bucketing with date_trunc">
+        <code><![CDATA[SELECT date_trunc('${part default="month"}', ${ts}) AS bucket, ${agg default="count(*)"}
+FROM ${table}
+GROUP BY ALL ORDER BY ALL${cursor};]]></code>
+    </codetemplate>
+    <codetemplate abbreviation="dwin" descriptionId="Running total window">
+        <code><![CDATA[SELECT ${cols}, sum(${value}) OVER (PARTITION BY ${key} ORDER BY ${order} ROWS UNBOUNDED PRECEDING) AS running_total
+FROM ${table}${cursor};]]></code>
+    </codetemplate>
+</codetemplates>
