@@ -23,12 +23,12 @@ Requires Apache NetBeans 31 or later.
 
 Active when the editor's connection is a DuckDB connection.
 
-- Error checking through DuckDB itself: each statement is sent as `EXPLAIN`, which parses and binds without executing. Syntax errors are underlined in red, unresolved names in yellow, with DuckDB's message in the tooltip.
-- Quick fixes: install and load a missing extension; apply DuckDB's "Did you mean" suggestion.
-- Completion: functions from `duckdb_functions()` including loaded extensions, tables and views, keywords and types, and columns in scope (tables, views, CTEs, subqueries, `read_csv(...)`), resolved with `DESCRIBE`.
-- Documentation on hover for keywords, types and functions.
-- Objects created earlier in the same script are not reported as missing.
-- 30 code templates (`dqual`, `dpiv`, `dasof`, `dcsv`, `dcopy`, `dmacro`, ...): type the abbreviation, press Tab.
+- **Error checking through DuckDB itself:** each statement is sent as `EXPLAIN`, which parses and binds without executing. Syntax errors are underlined in red, unresolved names in yellow, with DuckDB's message in the tooltip.
+- **Quick fixes:** install and load a missing extension; apply DuckDB's "Did you mean" suggestion.
+- **Completion:** functions from `duckdb_functions()` including loaded extensions, tables and views, keywords and types, and columns in scope (tables, views, CTEs, subqueries, `read_csv(...)`), resolved with `DESCRIBE`.
+- **Documentation on hover** for keywords, types and functions.
+- **Objects created earlier** in the same script are not reported as missing.
+- **30 code templates** (`dqual`, `dpiv`, `dasof`, `dcsv`, `dcopy`, `dmacro`, ...): type the abbreviation, press Tab.
 
 ### Connections
 
@@ -55,11 +55,16 @@ Tests run against an in-memory DuckDB. Tests that need the DuckDB `excel` extens
 
 ## How it works
 
-DataWrangler has no SQL parser and no model of the database schema. Everything the editor reports comes from running statements against the connected DuckDB database. To check a statement, DataWrangler runs it as EXPLAIN, which makes DuckDB parse the statement and resolve every name in it without executing it; DuckDB's error message and position become the underline and the tooltip. To list the columns available after s., it runs DESCRIBE on whatever s refers to, whether a table, a view, a common table expression, a subquery or a read_csv(...) call. The function list is read from duckdb_functions(), Parquet file details from parquet_metadata(), and spreadsheet cells from read_xlsx().
+DataWrangler has no SQL parser and no model of the database schema. Everything the editor reports comes from running statements against the connected DuckDB database. 
+
+- To check a statement, DataWrangler runs it as EXPLAIN, which makes DuckDB parse the statement and resolve every name in it without executing it; DuckDB's error message and position become the underline and the tooltip. 
+- To list the columns available after s., it runs DESCRIBE on whatever s refers to, whether a table, a view, a common table expression, a subquery or a read_csv(...) call. The function list is read from duckdb_functions(), Parquet file details from parquet_metadata(), and spreadsheet cells from read_xlsx().
 
 These statements run on a separate connection to the same database, so editor checks do not interfere with queries the user is running.
 
-Two things follow from this design. What the editor shows is correct for the DuckDB version that is installed and the extensions that are loaded, and it remains correct when a new DuckDB release adds syntax, because there is nothing in DataWrangler to update. On the other hand, features that need a syntax tree of the file, such as renaming an alias throughout a script, are not offered, and most features require a connection to an open database.
+**Note:**
+- What the editor shows is correct for the DuckDB version that is installed and the extensions that are loaded, and it remains correct when a new DuckDB release adds syntax, because there is nothing in DataWrangler to update.
+- On the other hand, features that need a syntax tree of the file, such as renaming an alias throughout a script, are not supported, and most features require a connection to an open database, which is automatically created when needed.
 
 ## Layout
 
