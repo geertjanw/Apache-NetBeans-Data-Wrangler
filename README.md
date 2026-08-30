@@ -28,7 +28,7 @@ Active when the editor's connection is a DuckDB connection.
 - **Completion:** functions from `duckdb_functions()` including loaded extensions, tables and views, keywords and types, and columns in scope (tables, views, CTEs, subqueries, `read_csv(...)`), resolved with `DESCRIBE`.
 - **Documentation on hover** for keywords, types and functions.
 - **Objects created earlier** in the same script are not reported as missing.
-- **30 code templates** (`dqual`, `dpiv`, `dasof`, `dcsv`, `dcopy`, `dmacro`, ...): type the abbreviation, press Tab.
+- **31 code templates** for common DuckDB patterns: type the abbreviation, press Tab. The full list is in [Code templates](#code-templates) below.
 
 ### Connections
 
@@ -36,6 +36,44 @@ Active when the editor's connection is a DuckDB connection.
 - **Manage DuckDB Extensions** on a connection.
 - **Run in DuckDB Result Viewer** in the editor: nested values as formatted JSON.
 - Connections are opened automatically when a feature needs them.
+
+## Code templates
+
+Type the abbreviation in an SQL editor and press Tab. Blue fields are parameters; Tab moves between them, Enter finishes. All abbreviations start with `d` so they do not collide with SQL words. Edit or add templates under Tools › Options › Editor › Code Templates › Language: SQL.
+
+| Abbreviation | What it does | Expansion (parameters in angle brackets) |
+|---|---|---|
+| `dfrom` | FROM-first query; `SELECT *` is implied when the projection is left out. | `FROM <table> SELECT * ;` |
+| `dexcl` | All columns except the listed ones. | `SELECT * EXCLUDE (<cols>) FROM <table>;` |
+| `drepl` | All columns, with one replaced by an expression under the same name. | `SELECT * REPLACE (<expr> AS <col>) FROM <table>;` |
+| `dcols` | Apply an aggregate to every column matching a regular expression. | `SELECT min(COLUMNS('.*')) FROM <table>;` |
+| `dqual` | Top-N rows per group using `row_number()` and `QUALIFY`, without a subquery. | `SELECT * FROM <table> QUALIFY row_number() OVER (PARTITION BY <key> ORDER BY <order> DESC) <= 1;` |
+| `dgall` | Aggregate with `GROUP BY ALL` and `ORDER BY ALL`, so grouping columns are not repeated. | `SELECT <dims>, count(*) FROM <table> GROUP BY ALL ORDER BY ALL;` |
+| `dpiv` | Cross-tab: one column per distinct value of a column. | `PIVOT <table> ON <column> USING sum(<value>) GROUP BY <group>;` |
+| `dunpiv` | Turn columns into rows (inverse of PIVOT). | `UNPIVOT <table> ON <columns> INTO NAME name VALUE value;` |
+| `dasof` | Match each left row to the nearest earlier right row by time; typical for prices or rates. | `SELECT l.*, r.<rcol> FROM <left> <l> ASOF JOIN <right> <r> ON <l>.<key> = <r>.<key> AND <l>.ts >= <r>.<ts>;` |
+| `dcte` | Common table expression followed by a query over it. | `WITH cte AS ( <query> ) SELECT * FROM <cte>;` |
+| `dcsv` | Read a CSV file with header and type detection. | `SELECT * FROM read_csv('<path>', header = true, auto_detect = true);` |
+| `dpq` | Read one Parquet file or a glob of files. | `SELECT * FROM read_parquet('<path>');` |
+| `djson` | Read a JSON array or newline-delimited JSON with schema detection. | `SELECT * FROM read_json_auto('<path>');` |
+| `dcopy` | Write a query result to a Parquet file. | `COPY (<query>) TO '<path>' (FORMAT parquet);` |
+| `dctas` | Load a file into a table in one statement. | `CREATE OR REPLACE TABLE <table> AS SELECT * FROM '<path>';` |
+| `dins` | Insert by column name with an upsert on conflict. | `INSERT INTO <table> BY NAME SELECT <cols> FROM <source> ON CONFLICT DO UPDATE SET <col> = excluded.<col>;` |
+| `dmacro` | Define a scalar macro (a reusable expression with parameters). | `CREATE OR REPLACE MACRO <name>(<params>) AS <expr>;` |
+| `dtmacro` | Define a table macro (a reusable parameterised query). | `CREATE OR REPLACE MACRO <name>(<params>) AS TABLE <query>;` |
+| `dlist` | Filter and transform a list with lambdas. | `SELECT list_transform(list_filter(<list>, x -> x IS NOT NULL), x -> x);` |
+| `dstruct` | Build a struct literal and read a field from it. | `SELECT {'a': 1, 'b': 'x'} AS s, s.<a>;` |
+| `dunnest` | Explode a list column into one row per element. | `SELECT <id>, unnest(<list>) AS elem FROM <table>;` |
+| `dvals` | Inline rows with `VALUES` and a column-list alias; useful for examples without a file. | `SELECT * FROM (VALUES (1, 'a'), (2, 'b') ) AS t(id, name);` |
+| `dsample` | Random sample of a table with a fixed seed. | `SELECT * FROM <table> USING SAMPLE 10% (bernoulli, 42);` |
+| `dsum` | Per-column statistics: min, max, distinct count, quartiles, null percentage. | `SUMMARIZE <table>;` |
+| `ddesc` | Column names and types of a query result. | `DESCRIBE SELECT * FROM <source>;` |
+| `dexpl` | Run a query and show the plan with actual timings. | `EXPLAIN ANALYZE <query>;` |
+| `dext` | Install and load a DuckDB extension. | `INSTALL <ext>; LOAD <ext>;` |
+| `dattach` | Attach another database file and query a table in it. | `ATTACH '<path>' AS <name> (READ_ONLY); SELECT * FROM <name>.main.<table>;` |
+| `dsecret` | Store S3 credentials for `httpfs` reads. | `CREATE OR REPLACE SECRET s3 (TYPE s3, KEY_ID '<key>', SECRET '<secret>', REGION 'eu-west-1');` |
+| `ddate` | Aggregate by calendar bucket with `date_trunc`. | `SELECT date_trunc('month', <ts>) AS bucket, count(*) FROM <table> GROUP BY ALL ORDER BY ALL;` |
+| `dwin` | Running total with a window frame. | `SELECT <cols>, sum(<value>) OVER (PARTITION BY <key> ORDER BY <order> ROWS UNBOUNDED PRECEDING) AS running_total FROM <table>;` |
 
 ## Build and install
 
