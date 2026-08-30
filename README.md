@@ -6,7 +6,7 @@ Requires Apache NetBeans 31 or later.
 
 ## Features
 
-Images for the features described below are here: https://foojay.io/today/netbeans-datawrangler-query-convert-and-edit-data-analytics-files/
+Screenshots for the features described below are here: https://foojay.io/today/netbeans-datawrangler-query-convert-and-edit-data-analytics-files/
 
 ### Files
 
