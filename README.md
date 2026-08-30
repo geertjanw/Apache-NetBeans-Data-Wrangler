@@ -100,7 +100,7 @@ Query patterns, file reads and exports, and introspection. Labelled "Snippet" in
 | `ddate` | Aggregate by calendar bucket with `date_trunc`. | `SELECT date_trunc('month', <ts>) AS bucket, count(*) FROM <table> GROUP BY ALL ORDER BY ALL;` |
 | `dwin` | Running total with a window frame. | `SELECT <cols>, sum(<value>) OVER (PARTITION BY <key> ORDER BY <order> ROWS UNBOUNDED PRECEDING) AS running_total FROM <table>;` |
 
-### 1.5 Diff View
+### 1.5 Enhanced Diff View
 
 **Compare with DuckDB** in the context menu of CSV, TSV, Parquet, JSON and Excel files: a data diff, not a byte diff. Select two files of the same kind and choose it, or select one and pick the other in a file chooser filtered to that kind. The menu item is greyed out when the selection cannot be compared — more than two files, or two files of different kinds — with the reason as the tooltip of the disabled item.
 
