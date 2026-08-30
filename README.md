@@ -1,8 +1,11 @@
 # Apache NetBeans DataWrangler
 
 Query, convert, inspect, edit and analyze CSV, [Apache Parquet](https://parquet.apache.org/), JSON and Excel files in Apache NetBeans via [DuckDB](https://duckdb.org/). 
+
 Files open as documents with Visual and Query tabs. 
+
 The SQL editor has enhanced completion, documentation, error checking and quick fixes for analytical SQL via DuckDB. 
+
 DuckDB is bundled.
 
 Requires Apache NetBeans 31 or later.
