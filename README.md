@@ -40,11 +40,11 @@ Active when the editor's connection is a DuckDB connection.
 - **Run in DuckDB Result Viewer** in the editor: nested values as formatted JSON.
 - Connections are opened automatically when a feature needs them.
 
-## Code templates
+### Code templates
 
 Type the abbreviation in an SQL editor and press Tab, or type `d` and press Ctrl+Space: the templates are listed at the top of the completion list, table templates first, then snippets. Blue fields are parameters; Tab moves between them, Enter finishes. All abbreviations start with `d` so they do not collide with SQL words. Edit or add templates under Tools › Options › Editor › Code Templates › Language: SQL.
 
-### Table templates
+#### Table templates
 
 Create or fill tables and views: from inline `VALUES`, from a query, from a CSV, Parquet, JSON or Excel file, or empty with typed columns. Labelled "Table template" in the completion list.
 
@@ -62,7 +62,7 @@ Create or fill tables and views: from inline `VALUES`, from a query, from a CSV,
 | `dtxlsx` | Load one sheet of an Excel workbook into a table. | `CREATE OR REPLACE TABLE <table> AS SELECT * FROM read_xlsx('<path>', sheet = 'Sheet1');` |
 | `dtable` | Create an empty table with typed columns. | `CREATE OR REPLACE TABLE <table> ( id INTEGER, name VARCHAR, amount DECIMAL(10,2), created_at TIMESTAMP );` |
 
-### Snippets
+#### Snippets
 
 Query patterns, file reads and exports, and introspection. Labelled "Snippet" in the completion list.
 
@@ -100,7 +100,7 @@ Query patterns, file reads and exports, and introspection. Labelled "Snippet" in
 | `ddate` | Aggregate by calendar bucket with `date_trunc`. | `SELECT date_trunc('month', <ts>) AS bucket, count(*) FROM <table> GROUP BY ALL ORDER BY ALL;` |
 | `dwin` | Running total with a window frame. | `SELECT <cols>, sum(<value>) OVER (PARTITION BY <key> ORDER BY <order> ROWS UNBOUNDED PRECEDING) AS running_total FROM <table>;` |
 
-## Diff View
+### Diff View
 
 **Compare with DuckDB** in the context menu of CSV, TSV, Parquet, JSON and Excel files: a data diff, not a byte diff. Select two files of the same kind and choose it, or select one and pick the other in a file chooser filtered to that kind. The menu item is greyed out when the selection cannot be compared — more than two files, or two files of different kinds — with the reason as the tooltip of the disabled item.
 
