@@ -21,18 +21,6 @@ Screenshots for the features described below are here: https://foojay.io/today/n
 
 - **File › New File › Analytics**: SQL Query, Data Exploration Script, Import Script, Parquet Query Script, Export Script, and sample CSV, Parquet, JSON and Excel files.
 
-### Compare
-
-**Compare with DuckDB** in the context menu of CSV, TSV, Parquet, JSON and Excel files: a data diff, not a byte diff. Select two files of the same kind and choose it, or select one and pick the other in a file chooser filtered to that kind. The menu item is greyed out when the selection cannot be compared — more than two files, or two files of different kinds — with the reason as the tooltip of the disabled item.
-
-A *Diff: a ↔ b* tab opens in the Output area with a summary line (identical or different, row counts, rows only in each side, columns in common) and, per comparison:
-
-- **Side by side** — NetBeans' own diff viewer over the two datasets as text, one row per line over the common columns, sorted so equal rows align and only differences are highlighted; first 5,000 rows of each side.
-- **Schema** — every column with its type in A and B and a status: same, type differs, only in A, only in B; differences in red.
-- **Only in A** and **Only in B** — the exact row sets, computed with `EXCEPT ALL` in both directions so duplicates count; shown up to 2,000 rows with the total. Nested values render as JSON.
-
-All tables sort by clicking a column header. Columns present in both files but with different types are compared as numbers when both types are numeric (so a `DECIMAL(10,2)` matches a `DOUBLE`), otherwise as text. Excel workbooks are compared sheet by sheet over the sheets they have in common, one set of tabs per sheet, and sheets that exist in only one workbook are listed. The comparison runs on the automatically opened DuckDB connection.
-
 ### SQL editor
 
 Active when the editor's connection is a DuckDB connection.
@@ -111,6 +99,18 @@ Query patterns, file reads and exports, and introspection. Labelled "Snippet" in
 | `dsecret` | Store S3 credentials for `httpfs` reads. | `CREATE OR REPLACE SECRET s3 (TYPE s3, KEY_ID '<key>', SECRET '<secret>', REGION 'eu-west-1');` |
 | `ddate` | Aggregate by calendar bucket with `date_trunc`. | `SELECT date_trunc('month', <ts>) AS bucket, count(*) FROM <table> GROUP BY ALL ORDER BY ALL;` |
 | `dwin` | Running total with a window frame. | `SELECT <cols>, sum(<value>) OVER (PARTITION BY <key> ORDER BY <order> ROWS UNBOUNDED PRECEDING) AS running_total FROM <table>;` |
+
+### Compare
+
+**Compare with DuckDB** in the context menu of CSV, TSV, Parquet, JSON and Excel files: a data diff, not a byte diff. Select two files of the same kind and choose it, or select one and pick the other in a file chooser filtered to that kind. The menu item is greyed out when the selection cannot be compared — more than two files, or two files of different kinds — with the reason as the tooltip of the disabled item.
+
+A *Diff: a ↔ b* tab opens in the Output area with a summary line (identical or different, row counts, rows only in each side, columns in common) and, per comparison:
+
+- **Side by side** — NetBeans' own diff viewer over the two datasets as text, one row per line over the common columns, sorted so equal rows align and only differences are highlighted; first 5,000 rows of each side.
+- **Schema** — every column with its type in A and B and a status: same, type differs, only in A, only in B; differences in red.
+- **Only in A** and **Only in B** — the exact row sets, computed with `EXCEPT ALL` in both directions so duplicates count; shown up to 2,000 rows with the total. Nested values render as JSON.
+
+All tables sort by clicking a column header. Columns present in both files but with different types are compared as numbers when both types are numeric (so a `DECIMAL(10,2)` matches a `DOUBLE`), otherwise as text. Excel workbooks are compared sheet by sheet over the sheets they have in common, one set of tabs per sheet, and sheets that exist in only one workbook are listed. The comparison runs on the automatically opened DuckDB connection.
 
 ## Build and install
 
