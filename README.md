@@ -33,7 +33,7 @@ Active when the editor's connection is a DuckDB connection.
 - **Zoom:** Cmd+Shift++ and Cmd+Shift+- (Ctrl on Windows and Linux) make the editor text larger or smaller; Cmd+Shift+0 resets.
 - **42 code templates** for common DuckDB patterns, in two groups: table templates that create or fill tables and views, and snippets. Type the abbreviation and press Tab, or pick them from the top of the completion list. The full list is in [Code templates](#code-templates) below.
 
-### 1.3 Enhanced Connections
+### 1.3 Enhanced Database Connections
 
 - **Register DuckDB Database** on the Databases node: in-memory or file, read-only, threads, memory limit. No credentials.
 - **Manage DuckDB Extensions** on a connection.
